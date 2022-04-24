@@ -6,7 +6,7 @@
     <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
 </head>
 <body>
-<h1>hello</h1>
+<h1>hello2</h1>
 <div>
     <form id="login-form" enctype="multipart/form-data">
         <input id="name" name="name" type="text" value="111">
@@ -16,16 +16,28 @@
 </div>
 </body>
 <script type="application/javascript">
-
     $("#submit").click(function () {
+        console.log(222, $("#login-form").serializeArray())
+        let user = {};
+        var list = $("#login-form").serializeArray();
+
+        $.each(list, function (index, value) {
+                console.log(value)
+                user.key = value.name;
+                user[user.key] = value.value;
+            }
+        )
+        
+        console.log(user)
+
         $.ajax({
+            headers: {'Content-Type': 'application/json'},
             type: "post",
-            url: "/login",
-            data: $("#login-form").serialize(),
+            url: "/login2",
+            data: JSON.stringify(user),
             success: function (data) {
-                console.log(data)
-                if (data === "1") {
-                    location.href = "/hello2"
+                if (data==="2"){
+                    location.href = "https://www.baidu.com"
                 }
             }
         })
