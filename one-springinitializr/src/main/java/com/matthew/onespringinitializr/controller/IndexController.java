@@ -1,7 +1,12 @@
 package com.matthew.onespringinitializr.controller;
 
+import ch.qos.logback.core.util.FileUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.*;
+import java.lang.reflect.Field;
 
 /**
  * @author zhangyunpo
@@ -20,6 +25,11 @@ public class IndexController {
         return "hello2";
     }
 
+    @GetMapping("/hello3")
+    public String index3 () {
+        return "hello3";
+    }
+
     @PostMapping("/login")
     @ResponseBody
     public String login (String name, String password) {
@@ -31,6 +41,24 @@ public class IndexController {
     @ResponseBody
     public String login2 (@RequestBody User user) {
         System.out.printf(user.toString());
+        return "2";
+    }
+
+    @PostMapping("/login3")
+    @ResponseBody
+    public String login3 (@RequestParam("file")  MultipartFile file) {
+
+        try {
+            System.out.println(file);
+                InputStream inputStream = file.getInputStream();
+            File file1 = new File("/Users/matthew/Desktop/" + file.getName());
+            OutputStream outputStream = new BufferedOutputStream(new FileOutputStream(file1));
+
+
+        } catch(IOException e) {
+            throw new RuntimeException(e);
+        }
+
         return "2";
     }
 

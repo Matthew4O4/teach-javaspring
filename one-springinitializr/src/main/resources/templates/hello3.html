@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/axios/0.21.1/axios.min.js"></script>
+
+</head>
+<body>
+<h1>hello3</h1>
+<div>
+    <form id="login-form">
+        <input id="file-up" name="file-up" type="file">
+        <button id="submit" name="submit" type="button">按钮</button>
+    </form>
+</div>
+</body>
+<script type="application/javascript">
+
+
+    $("#submit").click(function () {
+
+        var fileElement = $("#file-up").get(0).files[0];
+        console.log(fileElement);
+
+        var file = new FormData()
+        file.append("file", fileElement);
+
+        axios({
+            method: 'post',
+            url: '/login3',
+            //下面这个请求头是重点
+            headers: {
+                'Content-Type': 'multipart/form-data;charset=UTF-8'
+            },
+            data: file,
+        }).then(res => {
+            console.log('成功');
+
+        }).catch(err => {
+            console.log('错误');
+        })
+    })
+
+</script>
+</html>
